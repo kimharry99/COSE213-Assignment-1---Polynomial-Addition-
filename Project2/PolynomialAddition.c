@@ -16,9 +16,9 @@ int start[2] = { 0, }, finish[2] = { 0, };
 void attach(float coefficient, int exponent);
 /* add A(x) and B(x) to obtain D(x) */
 void padd(int startA, int finishA, int startB, int finishB, int *startD, int *finishD);
-/*Print the polynomial in polynomial array 'temrs' between [start, finish].*/
+/* Print the polynomial in polynomial array 'temrs' between [start, finish] */
 void printPolynomial(int start, int finish);
-/* Reapeat function attatch to make polynomial and check exception.*/
+/* Add the num polynomial to the array 'terms' and check exception */
 void inputPolynomial(int num);
 
 int main() {
