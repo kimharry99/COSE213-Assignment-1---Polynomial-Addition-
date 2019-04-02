@@ -62,13 +62,33 @@ void attach(float coefficient, int exponent)
 int main() {
 	printf("Input first polynomial.\n");
 	for (int i = 0;; i++) {
+		float tempcoef = 0;
 		float tempexpon = 0;
-		if (scanf("%f", &terms[i].coef) != 1) {
+		if (scanf("%f", &tempcoef) != 1) {
 			printf("Input data in the correct format.");
 			exit(EXIT_FAILURE);
 		}
-		int a = scanf("%f", &tempexpon);
-		if (a!= 1){
+		/*
+		while ((c = getchar()) == (char)32) {
+			printf("space\n");
+		}
+		if (c == '\n') {
+			printf("Input both coefficient and exponent.");
+			exit(EXIT_FAILURE);
+		}*/
+		/**
+		* 지금 하고 싶은거
+		* 계수를 입력받는다
+		* 계수 다음에 enter가 들어온다
+		* enter가 입력된 것이 확인되면
+		* 예외로 처리한다.
+
+		* 현재 상황
+		* enter입력을 확인할 때
+		* enter가 아니라 제대로 된 데이터 였다면
+		* 그 데이터를 저장할 방법이 없다. 
+		**/
+		if (scanf("%f", &tempexpon) != 1){
 			printf("Input data in the correct format.");
 			exit(EXIT_FAILURE);
 		}
@@ -76,11 +96,11 @@ int main() {
 			printf("The cofficient of term is not natrual number.");
 			exit(EXIT_FAILURE);
 		}
-		terms[i].expon = (int)tempexpon;
+		attach(tempcoef, (int)tempexpon);
 		if(i!=0) finishA++;
 		if (getchar() == '\n') break;
 	}
-	for (int i = startA; i <= finishA; i++) {
+	for (int i = startA; i < avail; i++) {
 		printf("%.3f", terms[i].coef);
 		if (terms[i].expon != 0) {
 			printf("x^%d", terms[i].expon);
