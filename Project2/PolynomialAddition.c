@@ -96,6 +96,7 @@ void inputPolynomial(int num) {
 	for (int i = 0;; i++) {
 		float tempcoef = 0;
 		float tempexpon = 0;
+		/* check exception that tempcoef is not a float type */
 		if (scanf("%f", &tempcoef) != 1) {
 			printf("Input data in the correct format.");
 			exit(EXIT_FAILURE);
@@ -120,12 +121,14 @@ void inputPolynomial(int num) {
 		* enter가 아니라 제대로 된 데이터 였다면
 		* 그 데이터를 저장할 방법이 없다.
 		**/
+		/* check exception that tempexpon is not a float type */
 		if (scanf("%f", &tempexpon) != 1) {
 			printf("Input data in the correct format.");
 			exit(EXIT_FAILURE);
 		}
+		/* check exception that tempexpon is not 0 or natural number */
 		if (tempexpon < 0 || (int)(tempexpon * 10) - ((int)tempexpon * 10)) {
-			printf("The cofficient of term is not 0 or natrual number.");
+			printf("The cofficient of term is not 0 or natural number.");
 			exit(EXIT_FAILURE);
 		}
 		attach(tempcoef, (int)tempexpon);
