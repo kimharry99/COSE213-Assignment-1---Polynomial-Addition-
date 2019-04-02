@@ -8,6 +8,7 @@ typedef struct {
 } polynomial;
 polynomial terms[MAX_TERMS];
 int avail = 0;
+int startA = 0, finishA = 0, startB = 0, finishB = 0;
 
 void attach(float coefficient, int exponent);
 
@@ -59,17 +60,33 @@ void attach(float coefficient, int exponent)
 	terms[avail++].expon = exponent;
 }
 int main() {
-	printf("Input first polynomial.");
+	printf("Input first polynomial.\n");
 	for (int i = 0;; i++) {
 		float tempexpon = 0;
-		scanf("%f", &terms[i].coef);
-		scanf("%f", &tempexpon);
-		if (getchar() == '\n') break;
+		if (scanf("%f", &terms[i].coef) != 1) {
+			printf("Input data in the correct format.");
+			exit(EXIT_FAILURE);
+		}
+		int a = scanf("%f", &tempexpon);
+		if (a!= 1){
+			printf("Input data in the correct format.");
+			exit(EXIT_FAILURE);
+		}
 		if (tempexpon < 0 || (int)(tempexpon * 10) - ((int)tempexpon * 10)) {
 			printf("The cofficient of term is not natrual number.");
 			exit(EXIT_FAILURE);
 		}
 		terms[i].expon = (int)tempexpon;
+		if(i!=0) finishA++;
+		if (getchar() == '\n') break;
+	}
+	for (int i = startA; i <= finishA; i++) {
+		printf("%.3f", terms[i].coef);
+		if (terms[i].expon != 0) {
+			printf("x^%d", terms[i].expon);
+		}
+		if (i != finishA)
+			printf(" + ");
 	}
 	return 0;
 }
