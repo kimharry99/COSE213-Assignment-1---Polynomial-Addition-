@@ -1,19 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define MAX_TERMS 100 /* size of terms array */
+#define COMPARE(x, y) ( ((x) < (y)) ? -1 : ((x) == (y)) ? 0 : 1 )
 
 typedef struct {
 	float coef;
 	int expon;
 } polynomial;
 polynomial terms[MAX_TERMS];
+
 int avail = 0;
-int startA = 0, finishA = 0, startB = 0, finishB = 0;
+int start[2] = { 0, }, finish[2] = { 0, };
 
 void attach(float coefficient, int exponent);
 void printPolynomial(int start, int finish);
+void inputPolynomial(int num);
 
-#define COMPARE(x, y) ( ((x) < (y)) ? -1 : ((x) == (y)) ? 0 : 1 )
 void padd(int startA, int finishA, int startB, int finishB, int *startD, int *finishD)
 { /* add A(x) and B(x) to obtain D(x) */
 	float coefficient;
@@ -60,8 +62,35 @@ void attach(float coefficient, int exponent)
 	terms[avail].coef = coefficient;
 	terms[avail++].expon = exponent;
 }
+
 int main() {
+	int startD=0;
+	int finishD=0;
 	printf("Input first polynomial.\n");
+	inputPolynomial(0);
+	printf("Input second polynomial.\n");
+	inputPolynomial(1);
+	padd(start[0], finish[0], start[1], finish[1], &startD, &finishD);
+	printPolynomial(startD, finishD);
+	return 0;
+}
+
+/*Print the polynomial in polynomial array 'temrs' between [start, finish].*/
+void printPolynomial(int start, int finish) {
+	for (int i = start; i <= finish; i++) {
+		printf("%.3f", terms[i].coef);
+		if (terms[i].expon != 0) {
+			printf("x^%d", terms[i].expon);
+		}
+		if (i != finish)
+			printf(" + ");
+	}
+}
+
+/* Reapeat function attatch to make polynomial and check exception.*/
+void inputPolynomial(int num) {
+	start[num] = avail;
+	finish[num] = start[num];
 	for (int i = 0;; i++) {
 		float tempcoef = 0;
 		float tempexpon = 0;
@@ -87,34 +116,18 @@ int main() {
 		* 현재 상황
 		* enter입력을 확인할 때
 		* enter가 아니라 제대로 된 데이터 였다면
-		* 그 데이터를 저장할 방법이 없다. 
+		* 그 데이터를 저장할 방법이 없다.
 		**/
-		if (scanf("%f", &tempexpon) != 1){
+		if (scanf("%f", &tempexpon) != 1) {
 			printf("Input data in the correct format.");
 			exit(EXIT_FAILURE);
 		}
 		if (tempexpon < 0 || (int)(tempexpon * 10) - ((int)tempexpon * 10)) {
-			printf("The cofficient of term is not natrual number.");
+			printf("The cofficient of term is not 0 or natrual number.");
 			exit(EXIT_FAILURE);
 		}
 		attach(tempcoef, (int)tempexpon);
-		if(i!=0) finishA++;
+		if (i != 0) finish[num]++;
 		if (getchar() == '\n') break;
-	}
-	printPolynomial(startA, finishA);
-	return 0;
-}
-
-/*
-Print the polynomial in polynomial array 'temrs' between [start, finish].
-*/
-void printPolynomial(int start, int finish) {
-	for (int i = start; i <= finish; i++) {
-		printf("%.3f", terms[i].coef);
-		if (terms[i].expon != 0) {
-			printf("x^%d", terms[i].expon);
-		}
-		if (i != finish-1)
-			printf(" + ");
 	}
 }
