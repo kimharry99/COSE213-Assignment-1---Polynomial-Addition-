@@ -11,6 +11,7 @@ int avail = 0;
 int startA = 0, finishA = 0, startB = 0, finishB = 0;
 
 void attach(float coefficient, int exponent);
+void printPolynomial(int start, int finish);
 
 #define COMPARE(x, y) ( ((x) < (y)) ? -1 : ((x) == (y)) ? 0 : 1 )
 void padd(int startA, int finishA, int startB, int finishB, int *startD, int *finishD)
@@ -100,13 +101,20 @@ int main() {
 		if(i!=0) finishA++;
 		if (getchar() == '\n') break;
 	}
-	for (int i = startA; i < avail; i++) {
+	printPolynomial(startA, avail);
+	return 0;
+}
+
+/*
+Print the polynomial in polynomial array 'temrs' between [start, finish).
+*/
+void printPolynomial(int start, int finish) {
+	for (int i = start; i < finish; i++) {
 		printf("%.3f", terms[i].coef);
 		if (terms[i].expon != 0) {
 			printf("x^%d", terms[i].expon);
 		}
-		if (i != finishA)
+		if (i != finish-1)
 			printf(" + ");
 	}
-	return 0;
 }
