@@ -12,12 +12,40 @@ polynomial terms[MAX_TERMS];
 int avail = 0;
 int start[2] = { 0, }, finish[2] = { 0, };
 
+/* add a new term to the polynomial */
 void attach(float coefficient, int exponent);
+/* add A(x) and B(x) to obtain D(x) */
+void padd(int startA, int finishA, int startB, int finishB, int *startD, int *finishD);
+/*Print the polynomial in polynomial array 'temrs' between [start, finish].*/
 void printPolynomial(int start, int finish);
+/* Reapeat function attatch to make polynomial and check exception.*/
 void inputPolynomial(int num);
 
+int main() {
+	int startD=0;
+	int finishD=0;
+	printf("Input first polynomial.\n");
+	inputPolynomial(0);
+	printf("Input second polynomial.\n");
+	inputPolynomial(1);
+	padd(start[0], finish[0], start[1], finish[1], &startD, &finishD);
+	printPolynomial(startD, finishD);
+	return 0;
+}
+
+void attach(float coefficient, int exponent)
+{
+	if (avail >= MAX_TERMS)
+	{
+		fprintf(stderr, "Too many terms in the polynomial\n");
+		exit(EXIT_FAILURE);
+	}
+	terms[avail].coef = coefficient;
+	terms[avail++].expon = exponent;
+}
+
 void padd(int startA, int finishA, int startB, int finishB, int *startD, int *finishD)
-{ /* add A(x) and B(x) to obtain D(x) */
+{
 	float coefficient;
 	*startD = avail;
 	while (startA <= finishA && startB <= finishB)
@@ -26,7 +54,7 @@ void padd(int startA, int finishA, int startB, int finishB, int *startD, int *fi
 		case -1: /* a expon < b expon */
 			attach(terms[startB].coef, terms[startB].expon);
 			startB++;
-				break;
+			break;
 		case 0: /* equal exponents */
 			coefficient = terms[startA].coef + terms[startB].coef;
 			if (coefficient)
@@ -51,31 +79,6 @@ void padd(int startA, int finishA, int startB, int finishB, int *startD, int *fi
 	*finishD = avail - 1;
 }
 
-void attach(float coefficient, int exponent)
-{
-	/* add a new term to the polynomial */
-	if (avail >= MAX_TERMS)
-	{
-		fprintf(stderr, "Too many terms in the polynomial\n");
-		exit(EXIT_FAILURE);
-	}
-	terms[avail].coef = coefficient;
-	terms[avail++].expon = exponent;
-}
-
-int main() {
-	int startD=0;
-	int finishD=0;
-	printf("Input first polynomial.\n");
-	inputPolynomial(0);
-	printf("Input second polynomial.\n");
-	inputPolynomial(1);
-	padd(start[0], finish[0], start[1], finish[1], &startD, &finishD);
-	printPolynomial(startD, finishD);
-	return 0;
-}
-
-/*Print the polynomial in polynomial array 'temrs' between [start, finish].*/
 void printPolynomial(int start, int finish) {
 	for (int i = start; i <= finish; i++) {
 		printf("%.3f", terms[i].coef);
@@ -87,7 +90,6 @@ void printPolynomial(int start, int finish) {
 	}
 }
 
-/* Reapeat function attatch to make polynomial and check exception.*/
 void inputPolynomial(int num) {
 	start[num] = avail;
 	finish[num] = start[num];
