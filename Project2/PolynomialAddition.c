@@ -101,15 +101,15 @@ int main() {
 		if(i!=0) finishA++;
 		if (getchar() == '\n') break;
 	}
-	printPolynomial(startA, avail);
+	printPolynomial(startA, finishA);
 	return 0;
 }
 
 /*
-Print the polynomial in polynomial array 'temrs' between [start, finish).
+Print the polynomial in polynomial array 'temrs' between [start, finish].
 */
 void printPolynomial(int start, int finish) {
-	for (int i = start; i < finish; i++) {
+	for (int i = start; i <= finish; i++) {
 		printf("%.3f", terms[i].coef);
 		if (terms[i].expon != 0) {
 			printf("x^%d", terms[i].expon);
