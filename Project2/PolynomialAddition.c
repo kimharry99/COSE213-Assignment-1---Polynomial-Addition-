@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX_TERMS 100 /* size of terms array */
+#define MAX_TERMS 101 /* size of terms array */
 #define COMPARE(x, y) ( ((x) < (y)) ? -1 : ((x) == (y)) ? 0 : 1 )
 
 typedef struct {
 	float coef;
 	int expon;
-} polynomial;
-polynomial terms[MAX_TERMS];
+} term;
+term terms[MAX_TERMS];
 
 int avail = 0;
 int start[2] = { 0, }, finish[2] = { 0, };
@@ -16,7 +16,7 @@ int start[2] = { 0, }, finish[2] = { 0, };
 void attach(float coefficient, int exponent);
 /* add A(x) and B(x) to obtain D(x) */
 void padd(int startA, int finishA, int startB, int finishB, int *startD, int *finishD);
-/* print the polynomial in polynomial array 'temrs' between [start, finish] */
+/* print the polynomial in term array 'temrs' between [start, finish] */
 void printPolynomial(int start, int finish);
 /* attach the num polynomial to the array 'terms' and check exception */
 void inputPolynomial(int num);
@@ -110,16 +110,16 @@ void inputPolynomial(int num) {
 			exit(EXIT_FAILURE);
 		}*/
 		/**
-		* Áö±Ý ÇÏ°í ½ÍÀº°Å
-		* °è¼ö¸¦ ÀÔ·Â¹Þ´Â´Ù
-		* °è¼ö ´ÙÀ½¿¡ enter°¡ µé¾î¿Â´Ù
-		* enter°¡ ÀÔ·ÂµÈ °ÍÀÌ È®ÀÎµÇ¸é
-		* ¿¹¿Ü·Î Ã³¸®ÇÑ´Ù.
+		* ï¿½ï¿½ï¿½ï¿½ ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		* ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·Â¹Þ´Â´ï¿½
+		* ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ enterï¿½ï¿½ ï¿½ï¿½ï¿½Â´ï¿½
+		* enterï¿½ï¿½ ï¿½Ô·Âµï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ÎµÇ¸ï¿½
+		* ï¿½ï¿½ï¿½Ü·ï¿½ Ã³ï¿½ï¿½ï¿½Ñ´ï¿½.
 
-		* ÇöÀç »óÈ²
-		* enterÀÔ·ÂÀ» È®ÀÎÇÒ ¶§
-		* enter°¡ ¾Æ´Ï¶ó Á¦´ë·Î µÈ µ¥ÀÌÅÍ ¿´´Ù¸é
-		* ±× µ¥ÀÌÅÍ¸¦ ÀúÀåÇÒ ¹æ¹ýÀÌ ¾ø´Ù.
+		* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È²
+		* enterï¿½Ô·ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+		* enterï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½
+		* ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 		**/
 		/* check exception that tempexpon is not a float type */
 		if (scanf("%f", &tempexpon) != 1) {

@@ -1,0 +1,16 @@
+diff a/Project2/PolynomialAddition.c b/Project2/PolynomialAddition.c	(rejected hunks)
+@@ -101,14 +101,6 @@
+ 			printf("Input data in the correct format.");
+ 			exit(EXIT_FAILURE);
+ 		}
+-		/*
+-		while ((c = getchar()) == (char)32) {
+-			printf("space\n");
+-		}
+-		if (c == '\n') {
+-			printf("Input both coefficient and exponent.");
+-			exit(EXIT_FAILURE);
+-		}*/
+ 		/**
+ 		* ���� �ϰ� ������
+ 		* ����� �Է¹޴´�
